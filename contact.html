@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- title and metas -->
+	<title>大衛美語 David&rsquo;s English Center</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="David's English Center, Kiosk, Taiwan" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+	<!-- scripts -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/lightbox.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
+
+	<!-- scripts -->
+	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript" src="js/helpers.js"></script>
+	<script type="text/javascript" src="http://www.google.com/uds/modules/gviz/gviz-api.js"></script>
+
+	<!-- main script -->
+	<script type="text/javascript">
+		$(function($) {
+			$.load_scroll()
+			$.load_header(5);
+			$.load('Contact_Page', 'select C where B is not null', function(d) {
+				$('#contact_page_name').append(d.rows[0].c[0].v);
+				$('#contact_page_description').append(d.rows[1].c[0].v);
+				$('#map_title').append(d.rows[2].c[0].v + '：');
+				$('#g_map').prop('src',
+					'https://www.google.com/maps/embed/v1/place?key=' +
+					$.get_google_maps_API_key() + '&language=zh-TW&region=tw' +
+					'&q=' + encodeURIComponent(d.rows[3].c[0].v)
+				);
+				$('#address_label').append(d.rows[4].c[0].v + '：');
+				$('#david_address').append(
+					d.rows[5].c[0].v + '<br />' +
+					d.rows[6].c[0].v + '<br />' +
+					d.rows[7].c[0].v + '<br />'
+				);
+				$('#phone_label').append(d.rows[8].c[0].v + '：');
+				$('#phone_number_1').append(d.rows[9].c[0].v);
+				$('#phone_number_2').append(d.rows[10].c[0].v);
+				$('#email_label').append(d.rows[11].c[0].v + '：');
+				$('#david_email')
+					.prop('href', 'mailto:' + d.rows[12].c[0].v)
+					.append(d.rows[12].c[0].v);
+				if (d.rows[13].c[0].v &&
+					(d.rows[13].c[0].v).toUpperCase() != "FALSE") {
+					console.log(d.rows[13].c[0].v);
+					$('#miscellaneous_information')
+						.append('<h4>' + d.rows[14].c[0].v + '</h4>')
+						.append('<p>' + d.rows[15].c[0].v + '</p>');
+				}
+				$('#contact_form_label').append(d.rows[16].c[0].v);
+				$('#contact_name').prop('placeholder', d.rows[17].c[0].v);
+				$('#contact_email').prop('placeholder', d.rows[18].c[0].v);
+				$('#contact_phone').prop('placeholder', d.rows[19].c[0].v);
+				$('#contact_message').prop('placeholder', d.rows[20].c[0].v);
+				$('#contact_submit').append(d.rows[21].c[0].v);
+			});
+			$.load_footer();
+		});
+	</script>
+
+	<!-- animate -->
+	<link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+	<script src="js/wow.min.js"></script>
+	<script>new WOW().init();</script>
+
+</head>
+<body>
+	<div class="contact">
+		<div class="container">
+
+			<!-- page title and description -->
+			<div class="contact-heading">
+				<h2 class="wow fadeInDown animated" data-wow-delay=".5s" id="contact_page_name"></h2>
+				<p class="wow fadeInUp animated" data-wow-delay=".5s" id="contact_page_description"></p>
+			</div>
+
+			<!-- map -->
+			<div class="map wow fadeInUp animated" data-wow-delay=".5s">
+				<h4 id="map_title"></h4>
+				<iframe
+					id="g_map" frameborder="0" style="border:0" allowfullscreen>
+				</iframe>
+			</div>
+
+			<!-- contact info: address, phone numbers, email address -->
+			<div class="address">
+				<div class="col-md-4 address-grids wow fadeInLeft animated" data-wow-delay=".5s">
+					<h4 id="address_label"></h4>
+					<ul><li><p id="david_address"></p></li></ul>
+				</div>
+				<div class="col-md-4 address-grids wow fadeInUp animated" data-wow-delay=".5s">
+					<h4 id="phone_label"></h4>
+					<p id="phone_number_1"></p>
+					<p id="phone_number_2"></p>
+				</div>
+				<div class="col-md-4 address-grids wow fadeInRight animated" data-wow-delay=".5s">
+					<h4 id="email_label"></h4>
+					<p><a id="david_email"></a></p>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+
+			<!-- Optional Misc Info -->
+			<div class="contact-infom wow fadeInUp animated" data-wow-delay=".5s" id="miscellaneous_information"></div>
+
+			<!-- Contact form -->
+			<div class="contact-form wow fadeInUp animated" data-wow-delay=".5s">
+				<h4 id="contact_form_label"></h4>
+				<form>
+					<input type="text" required="" id="contact_name">
+					<input type="email" required="" id="contact_email">
+					<input type="text" required="" id="contact_phone">
+					<textarea required="" id="contact_message"></textarea>
+					<button class="btn1 btn-1 btn-1b" id="contact_submit">
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- title and metas -->
+	<title>大衛美語 David&rsquo;s English Center</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="David's English Center, Kiosk, Taiwan" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+	<!-- scripts -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/lightbox.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
+
+	<!-- scripts -->
+	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript" src="js/helpers.js"></script>
+	<script type="text/javascript" src="http://www.google.com/uds/modules/gviz/gviz-api.js"></script>
+
+	<!-- main script -->
+	<script type="text/javascript">
+		$(function($) {
+			$.load_scroll()
+			$.load_header(3);
+
+            var schools = [
+                '大衛站前校',
+                '大衛復興校',
+
+                '大衛士林校',
+                '大衛內湖校',
+                '大衛中和校',
+                '大衛新店校',
+                '大衛蘆洲校',
+
+                '大衛淡水校',
+                '大衛中壢校',
+                '大衛竹北校',
+                '大衛新竹校',
+                '新竹科園校',
+
+                '大衛苗栗校',
+                '大衛台南校',
+                '大衛高雄校'
+            ];
+
+            for (var i = 0; i < 15; i++) {
+                $('#thedropdown').append(
+                    '<option value="' + i + '">' + schools[i] +
+                    '</option>'
+                );
+            }
+
+			$.load_footer();
+		});
+	</script>
+
+	<!-- animate -->
+	<link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+	<script src="js/wow.min.js"></script>
+	<script>new WOW().init();</script>
+
+</head>
+<body>
+    <div align="center">
+        <br />
+        先選分校 就可以看課程表
+        <br /><br />
+        <select id="thedropdown" onChange="my_func(this.selectedIndex);">
+        </select>
+
+        <br /><br />
+        <div id="thetable"></div>
+
+        <script>
+        function my_func(ind) {
+            if (!ind) {
+                $.load('Fake_Courses', 'select F, G, H', function(d) {
+                    var t_start =
+                    '<table class="table table-striped table-bordered table-condensed">' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th>時間</th>' +
+                                '<th>課程</th>' +
+                                '<th>老師</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+                    var t_end = '</tbody>' + '</table>';
+                    var t_content = "";
+                    $.each(d.rows, function(index, value) {
+                        t_content +=
+                            '<tr>' +
+                                '<td>' + value.c[0].v + '</td>' +
+                                '<td>' + value.c[1].v + '</td>' +
+                                '<td>' + value.c[2].v + '</td>' +
+                            '</tr>';
+                    });
+                    $('#thetable').replaceWith(t_start + t_content + t_end);
+                });
+            } else {
+                $('#thetable').replaceWith('<p>這所分校目前沒有課程。</p>');
+            }
+        }
+        </script>
+
+        <script>my_func(0);</script>
+
+    </div>
+
+</body>
+</html>

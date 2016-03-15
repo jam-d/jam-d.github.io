@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- title and metas -->
+	<title>大衛美語 David&rsquo;s English Center</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="David's English Center, Kiosk, Taiwan" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+	<!-- scripts -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/lightbox.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Francois+One' rel='stylesheet' type='text/css'>
+
+	<!-- scripts -->
+	<script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript" src="js/helpers.js"></script>
+	<script type="text/javascript" src="http://www.google.com/uds/modules/gviz/gviz-api.js"></script>
+
+	<!-- main script -->
+	<script type="text/javascript">
+		$(function($) {
+			$.load_scroll()
+			$.load_header(2);
+
+            $.load('Teachers_Page', 'select C where B is not null',
+            function(d) {
+    			$('#teachers_page_name').append(d.rows[0].c[0].v);
+    			$('#teachers_page_description').append(d.rows[1].c[0].v);
+    		});
+
+            // load teachers
+    		// $.load('Teachers', 'select D', function(d) {
+    		// 	console.log(d);
+    		// 	$('#teachers_list').prepend("a");
+    		// });
+            var teacher_width = 3;
+            var num_teachers = 50;
+            for (var i = num_teachers; i--;) {
+                $('#teachers_list').prepend(
+                    '<div class="col-md-' + teacher_width + ' gallery-grid wow ' +
+                    'fadeInUp animated" data-wow-delay=".5s">' +
+                        '<div class="grid">' +
+                            '<figure class="effect-apollo">' +
+                                '<a class="example-image-link" href="images/3.jpg"'+
+                                ' data-lightbox="example-set" data-title="">' +
+                                    '<img src="images/3.jpg" alt="" />' +
+                                    '<figcaption>' +
+                                        '<h3>David</h3>' +
+                                        '<p>台北站前校<br />紅酒課</p>' +
+                                    '</figcaption>' +
+                                '</a>' +
+                            '</figure>' +
+                        '</div>' +
+                    '</div>'
+                );
+            }
+
+            /*
+            // add the school district tabs
+            // fill it in using IDs that use the iteration number then another for logo
+               in the function(d) of execute that uses value of i to access individual IDs.
+            // teachersXschoolsXcourses is a nice challenge involving creating at least 3
+               new spreadsheets in the davids.english.jason account!
+            AFTER
+            // maybe change whether md-3 or md-4 based on total number of teachers
+            // make the white text stand out more somehow
+            LATER
+            // remaining pages & auth0
+            // put the subscription emails in a table, then query that table from the main
+               control table, then query that from a table in davids.english.jason (?)
+            */
+
+			$.load_footer();
+		});
+	</script>
+
+	<!-- animate -->
+	<link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+	<script src="js/wow.min.js"></script>
+	<script>new WOW().init();</script>
+
+</head>
+<body>
+	<!-- gallery -->
+		<div class="gallery">
+			<div class="container">
+				<div class="gallery-heading">
+					<h2 id="teachers_page_name"></h2>
+					<p id="teachers_page_description"></p>
+				</div>
+				<div class="gallery-grids" id="teachers_list">
+					<div class="clearfix"> </div>
+					<script src="js/lightbox-plus-jquery.min.js">
+                    </script>
+				</div>
+			</div>
+		</div>
+	<!-- //gallery -->
+</body>
+</html>
