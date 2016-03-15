@@ -11,8 +11,7 @@ var sheet_keys = {
     // photos and videos
     'Photos': '1lPcj8dsNMAyLPAZNLbn0gegy-JEZXlp7cAMaUCJAHUc',
     // universal
-    // 'Header': '17ETi0DMXD2x_9DmIpKzl35X-dH3QjUHDhQKWk8PGvTU',
-    'Header': '1mM6szqsOEvHXR0lisNjN1At_4lDgHK48_MDiMEDk5uE',
+    'Header': '17ETi0DMXD2x_9DmIpKzl35X-dH3QjUHDhQKWk8PGvTU',
     'Footer': '14dMokB5uKpSAryriGqSobj3My7ZIdPP3k7fQuC-0h6Q',
     // pages
     'Contact_Page': '1gfxZJeIpBbE1alsyl4JlhRVDdLVEQugOJQRln87wG1Q',
@@ -23,24 +22,14 @@ var sheet_keys = {
     'Fake_Courses': '1RpQzjDGrj7gzp7ENNPU7y5SVOdHhJD7ducsft0f9KDA'
 }
 
-// generates query URL, to call anonymous function function(){alert('hi');}();
-function queryOf(worksheet_name, intended_query) {
-    var drive_url = 'https://docs.google.com/spreadsheets/d/';
-    var gviz_call = '/gviz/tq?tq=';
-    var query_string = encodeURIComponent(intended_query);
-    return drive_url + sheet_keys[worksheet_name] + gviz_call + query_string;
-}
-
-// converts data to JSON object by first removing beginning text
-function jsonOf(data) {
-    var useful = data.substring(data.indexOf('{'), data.lastIndexOf('}') + 1);
-    return $.parseJSON(useful).table;
-}
-
 // generates query URL, gets data, converts to JSON object, executes action
-function execute(worksheet_name, intended_query, action) {
-    $.get(queryOf(worksheet_name, intended_query), function(returned_txt_data) {
-        action(jsonOf(returned_txt_data));
+function execute(worksheet_name, action) {
+    Tabletop.init({
+        key: sheet_keys[worksheet_name],
+        callback: function(data, tabletop) {
+            action(data);
+        },
+        simpleSheet: true
     });
 }
 
@@ -184,25 +173,24 @@ jQuery.extend( jQuery,
                 '</div>' +
             '</div>'
         );
-        execute('Header', 'select B, C', function(d) {
-            execute('Photos', 'select B where A = ' + d.rows[0].c[1].v,
-            function(photo) {
-                $('#logo_photo').prop('src', photo.rows[0].c[0].v);
-                $('#header_top_header_david_slogan').append(d.rows[1].c[1].v);
-                $('#login_translation').append(d.rows[2].c[1].v);
-                $('#signup_translation').append(d.rows[3].c[1].v);
-                $('#twitter_url').prop('href', d.rows[4].c[1].v);
-                $('#facebook_url').prop('href', d.rows[5].c[1].v);
-                $('#youtube_url').prop('href', d.rows[6].c[1].v);
-                $('#header_menu_name').append(d.rows[7].c[1].v);
-                $('#header_home_tab').append(d.rows[8].c[1].v);
-                $('#header_about_tab').append(d.rows[9].c[1].v);
-                $('#header_teachers_tab').append(d.rows[10].c[1].v);
-/*                $('#header_courses_schools_tab').prepend(d.rows[11].c[1].v);
-                $('#header_courses_sub_tab').append(d.rows[12].c[1].v);
-                $('#header_schools_sub_tab').append(d.rows[13].c[1].v);*/
-                $('#header_news_tab').append(d.rows[11].c[1].v);
-                $('#header_contact_tab').append(d.rows[15].c[1].v);
+        execute('Header', function(d) {
+            execute('Photos', function(p) {
+                $('#logo_photo').prop('src', p[d[0].value - 1].image_url);
+                $('#header_top_header_david_slogan').append(d[1].value);
+                $('#login_translation').append(d[2].value);
+                $('#signup_translation').append(d[3].value);
+                $('#twitter_url').prop('href', d[4].value);
+                $('#facebook_url').prop('href', d[5].value);
+                $('#youtube_url').prop('href', d[6].value);
+                $('#header_menu_name').append(d[7].value);
+                $('#header_home_tab').append(d[8].value);
+                $('#header_about_tab').append(d[9].value);
+                $('#header_teachers_tab').append(d[10].value);
+/*                $('#header_courses_schools_tab').prepend(d[11].value);
+                $('#header_courses_sub_tab').append(d[12].value);
+                $('#header_schools_sub_tab').append(d[13].value);*/
+                $('#header_news_tab').append(d[11].value);
+                $('#header_contact_tab').append(d[15].value);
             });
         });
     },
@@ -268,45 +256,41 @@ jQuery.extend( jQuery,
                 '</div>' +
             '</div>'
         );
-        execute('Header','select C where B contains "menu" or B contains "tab"',
-        function(d) {
-            $('#footer_menu_name').append(d.rows[0].c[0].v);
-            $('#footer_home_tab').append(d.rows[1].c[0].v);
-            $('#footer_about_tab').append(d.rows[2].c[0].v);
-            $('#footer_teachers_tab').append(d.rows[3].c[0].v);
-            $('#footer_courses_schools_tab').append(d.rows[4].c[0].v);
-            // $('#footer_news_tab').append(d.rows[7].c[0].v);
-            $('#footer_contact_tab').append(d.rows[8].c[0].v);
+        execute('Header', function(d) {
+            $('#footer_menu_name').append(d[7].value);
+            $('#footer_about_tab').append(d[9].value);
+            $('#footer_teachers_tab').append(d[10].value);
+            $('#footer_courses_schools_tab').append(d[11].value);
+            $('#footer_contact_tab').append(d[15].value);
         });
-        execute('Footer', 'select B, C, year(D), month(D), day(D) where A >= 1',
-        function(d) {
+        execute('Footer', function(d) {
             // populate the fields above
-            $('#newsletter_title').append(d.rows[0].c[1].v);
-            $('#instruction').append(d.rows[1].c[1].v);
-            $('#subscription_email').prop('placeholder', d.rows[2].c[1].v);
-            $('#subscription_submit').prop('value', d.rows[3].c[1].v);
-            $('#latest_news_translation').append(d.rows[4].c[1].v);
-            var last_article_date_row = d.rows[5].c[1].v * 3 + 3;
+            $('#newsletter_title').append(d[0].value);
+            $('#instruction').append(d[1].value);
+            $('#subscription_email').prop('placeholder', d[2].value);
+            $('#subscription_submit').prop('value', d[3].value);
+            $('#latest_news_translation').append(d[4].value);
+            var last_article_date_row = d[5].value * 3 + 3;
             if (last_article_date_row >= 6) {
                 var all_current_year = true;
                 for (var i = 6; i <= last_article_date_row; i += 3) {
-                    if (d.rows[i].c[2].v !== current_year)
+                    if (d[i].year !== current_year)
                         all_current_year = false;
                 }
                 function format_date_row(r) {
-                    return (all_current_year ? '' : r.c[2].v + '年') +
-                        (r.c[3].v < '9' ? '0' : '') + (r.c[3].v + 1) + '月' +
-                        (r.c[4].v <= '9' ? '0' : '') + r.c[4].v + '日：';
+                    return (all_current_year ? '' : r.year + '年') +
+                        (r.month <= 9 ? '0' : '') + r.month + '月' +
+                        (r.day <= 9 ? '0' : '') + r.day + '日：';
                 }
                 for (var i = 6; i <= last_article_date_row; i += 3) {
                     $('#news_articles').append(
-                        '<h6>' + format_date_row(d.rows[i]) + '<a href="' +
-                        d.rows[i + 2].c[1].v + '" target="_blank">' +
-                        d.rows[i + 1].c[1].v + '</a></h6>'
+                        '<h6>' + format_date_row(d[i]) + '<a href="' +
+                        d[i + 2].value + '" target="_blank">' +
+                        d[i + 1].value + '</a></h6>'
                     );
                 }
             } else {
-                $('#news_articles').append(d.rows[24].c[1].v);
+                $('#news_articles').append(d[24].value);
             }
         });
     },
