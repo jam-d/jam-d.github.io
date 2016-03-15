@@ -69,11 +69,11 @@
 
 </head>
 <body>
-    <div align="center">
+    <div class="col-md-8 col-md-offset-2" align="center">
         <br />
         先選分校 就可以看課程表
         <br /><br />
-        <select id="thedropdown" onChange="my_func(this.selectedIndex);">
+        <select id="thedropdown">
         </select>
 
         <br /><br />
@@ -109,6 +109,7 @@
                 $('#thetable').replaceWith('<p>這所分校目前沒有課程。</p>');
             }
         }
+        $('#thedropdown').prop('onChange', 'my_func(this.selectedIndex);');
         </script>
 
         <script>my_func(0);</script>
