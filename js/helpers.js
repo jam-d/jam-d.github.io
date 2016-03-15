@@ -11,7 +11,8 @@ var sheet_keys = {
     // photos and videos
     'Photos': '1lPcj8dsNMAyLPAZNLbn0gegy-JEZXlp7cAMaUCJAHUc',
     // universal
-    'Header': '17ETi0DMXD2x_9DmIpKzl35X-dH3QjUHDhQKWk8PGvTU',
+    // 'Header': '17ETi0DMXD2x_9DmIpKzl35X-dH3QjUHDhQKWk8PGvTU',
+    'Header': '1mM6szqsOEvHXR0lisNjN1At_4lDgHK48_MDiMEDk5uE',
     'Footer': '14dMokB5uKpSAryriGqSobj3My7ZIdPP3k7fQuC-0h6Q',
     // pages
     'Contact_Page': '1gfxZJeIpBbE1alsyl4JlhRVDdLVEQugOJQRln87wG1Q',
