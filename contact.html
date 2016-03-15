@@ -22,48 +22,47 @@
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>
 	<script type="text/javascript" src="js/helpers.js"></script>
-	<script type="text/javascript" src="http://www.google.com/uds/modules/gviz/gviz-api.js"></script>
+	<script type="text/javascript" src="http://cdn.bootcss.com/tabletop.js/1.4.3/tabletop.min.js"></script>
 
 	<!-- main script -->
 	<script type="text/javascript">
 		$(function($) {
 			$.load_scroll()
 			$.load_header(5);
-			$.load('Contact_Page', 'select C where B is not null', function(d) {
-				$('#contact_page_name').append(d.rows[0].c[0].v);
-				$('#contact_page_description').append(d.rows[1].c[0].v);
-				$('#map_title').append(d.rows[2].c[0].v + '：');
+			$.load('Contact_Page', function(d) {
+				$('#contact_page_name').append(d[0].value);
+				$('#contact_page_description').append(d[1].value);
+				$('#map_title').append(d[2].value + '：');
 				$('#g_map').prop('src',
 					'https://www.google.com/maps/embed/v1/place?key=' +
 					$.get_google_maps_API_key() + '&language=zh-TW&region=tw' +
-					'&q=' + encodeURIComponent(d.rows[3].c[0].v)
+					'&q=' + encodeURIComponent(d[3].value)
 				);
-				$('#address_label').append(d.rows[4].c[0].v + '：');
+				$('#address_label').append(d[4].value + '：');
 				$('#david_address').append(
-					d.rows[5].c[0].v + '<br />' +
-					d.rows[6].c[0].v + '<br />' +
-					d.rows[7].c[0].v + '<br />'
+					d[5].value + '<br />' +
+					d[6].value + '<br />' +
+					d[7].value + '<br />'
 				);
-				$('#phone_label').append(d.rows[8].c[0].v + '：');
-				$('#phone_number_1').append(d.rows[9].c[0].v);
-				$('#phone_number_2').append(d.rows[10].c[0].v);
-				$('#email_label').append(d.rows[11].c[0].v + '：');
+				$('#phone_label').append(d[8].value + '：');
+				$('#phone_number_1').append(d[9].value);
+				$('#phone_number_2').append(d[10].value);
+				$('#email_label').append(d[11].value + '：');
 				$('#david_email')
-					.prop('href', 'mailto:' + d.rows[12].c[0].v)
-					.append(d.rows[12].c[0].v);
-				if (d.rows[13].c[0].v &&
-					(d.rows[13].c[0].v).toUpperCase() != "FALSE") {
-					console.log(d.rows[13].c[0].v);
+					.prop('href', 'mailto:' + d[12].value)
+					.append(d[12].value);
+				if (d[13].value && (d[13].value).toUpperCase() != "FALSE") {
+					console.log(typeof(d[13].value));
 					$('#miscellaneous_information')
-						.append('<h4>' + d.rows[14].c[0].v + '</h4>')
-						.append('<p>' + d.rows[15].c[0].v + '</p>');
+						.append('<h4>' + d[14].value + '</h4>')
+						.append('<p>' + d[15].value + '</p>');
 				}
-				$('#contact_form_label').append(d.rows[16].c[0].v);
-				$('#contact_name').prop('placeholder', d.rows[17].c[0].v);
-				$('#contact_email').prop('placeholder', d.rows[18].c[0].v);
-				$('#contact_phone').prop('placeholder', d.rows[19].c[0].v);
-				$('#contact_message').prop('placeholder', d.rows[20].c[0].v);
-				$('#contact_submit').append(d.rows[21].c[0].v);
+				$('#contact_form_label').append(d[16].value);
+				$('#contact_name').prop('placeholder', d[17].value);
+				$('#contact_email').prop('placeholder', d[18].value);
+				$('#contact_phone').prop('placeholder', d[19].value);
+				$('#contact_message').prop('placeholder', d[20].value);
+				$('#contact_submit').append(d[21].value);
 			});
 			$.load_footer();
 		});

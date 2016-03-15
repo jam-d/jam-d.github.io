@@ -22,22 +22,13 @@
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>
 	<script type="text/javascript" src="js/helpers.js"></script>
-	<script type="text/javascript" src="http://www.google.com/uds/modules/gviz/gviz-api.js"></script>
+	<script type="text/javascript" src="http://cdn.bootcss.com/tabletop.js/1.4.3/tabletop.min.js"></script>
 
 	<!-- main script -->
 	<script type="text/javascript">
 		$(function($) {
 			$.load_scroll()
 			$.load_header(0);
-			$.load('Contact_Page', 'select C', function(d) {
-				$('#contact_page_name').append(d.rows[0].c[0].v);
-				$('#contact_page_description').append(d.rows[1].c[0].v);
-				$('#map_title').append(d.rows[2].c[0].v + '：');
-
-
-				$('#contact_form_name').append(d.rows[16].c[0].v);
-
-			});
 			$.load_footer();
 		});
 	</script>
